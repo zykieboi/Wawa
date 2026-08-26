@@ -4,5 +4,5 @@ source taken from hackers discord server that hacked and nuked korone on 20-21 a
 src maybe have backdoors or etc from hackers, because i dont checked it, idk what is kozun.exe in rccservice folder.
 
 To run and setup - have brain and skill (or just use claude)
-If that repo got deleted or account, there a trusted account with forks:
-soon
+If that repo got deleted or account, there a trusted accounts with fork:
+[SanTertrust aka SanTer](https://github.com/SanTertrust/korone-src-leaked)
