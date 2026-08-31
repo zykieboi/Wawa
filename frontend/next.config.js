@@ -1,4 +1,3 @@
-// a
 module.exports = {
     reactStrictMode: true,
     env: {
@@ -12,29 +11,5 @@ module.exports = {
                 }
             }
         }),
-    },
-};
-
-    exportPathMap: async function (defaultPathMap) {
-        // Remove all dynamic routes
-        Object.keys(defaultPathMap).forEach(path => {
-            if (path.includes('[') && path.includes(']')) {
-                delete defaultPathMap[path];
-            }
-        });
-        
-        // Remove pages with getInitialProps that fail during export
-        const excludePages = [
-            '/Forum/ShowPost.aspx',
-            '/User.aspx',
-            '/develop',
-            '/donate',
-            '/download',
-            '/Catalog.aspx',
-            '/trades',
-        ];
-        excludePages.forEach(p => delete defaultPathMap[p]);
-        
-        return defaultPathMap;
     },
 };
