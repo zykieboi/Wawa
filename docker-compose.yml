@@ -21,7 +21,7 @@ x-dotnet-dev-env: &dotnet-dev-env
   Discord__BotToken: ""
   Discord__GuildId: ""
   Discord__LogChannelId: ""
-  Render__BaseUrl: "http://host.docker.internal:3521"
+  Render__BaseUrl: "http://rcc-service-arbiter:3521"
   Render__AssetQueue__FastLaneConcurrency: "2"
   Render__AssetQueue__StreamConcurrency: "2"
   Render__AssetQueue__ProcessingLeaseSeconds: "120"
@@ -251,6 +251,21 @@ services:
     cpus: "${DOTNET_BUILD_CPU_LIMIT:-2.0}"
     restart: unless-stopped
 
+
+  rcc-service-arbiter:
+    <<: *dotnet-dev-service
+    working_dir: /srv/app/Roblox/Korone.RccServiceArbiter
+    command: sh /srv/app/scripts/docker-dotnet-run.sh Korone.RccServiceArbiter --urls http://0.0.0.0:3521
+    expose:
+      - "3521"
+    environment:
+      <<: *dotnet-dev-env
+      Render__BaseUrl: "http://rcc-service-arbiter:3521"
+      Arbiter__Render__MinimumWarmWorkers: "0"
+      Arbiter__Render__MaxWorkers: "1"
+      Arbiter__Render__MaximumIdleWorkers: "1"
+      Arbiter__RccServiceRoot: "/workspaces/Broski/RCCService"
+
   api-proxy:
     <<: *dotnet-dev-service
     working_dir: /srv/app/Roblox/Roblox.ApiProxy
@@ -346,6 +361,12 @@ services:
       - --ReverseProxy:Routes:games-apisite-route:Match:Hosts:1=127.0.0.1
       - --ReverseProxy:Routes:games-apisite-route:Match:Hosts:2=www.pekora.zip
       - --ReverseProxy:Routes:games-apisite-route:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:economy-apisite-route:ClusterId=website-cluster
+      - --ReverseProxy:Routes:economy-apisite-route:Match:Path=/apisite/economy/{**catch-all}
+      - --ReverseProxy:Routes:economy-apisite-route:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:economy-apisite-route:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:economy-apisite-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:economy-apisite-route:Match:Hosts:3=api-proxy
     ports:
       - "127.0.0.1:5200:5200"
     environment:
@@ -399,6 +420,7 @@ services:
     environment:
       <<: *dotnet-dev-env
       OwnerUserId__0: "1"
+      OwnerUserId__1: "2"
       PackageShirtAssetId: "0"
       PackagePantsAssetId: "0"
       LeakCheckApiKey: "dev-placeholder-leakcheck-api-key-0000000000000000"
@@ -475,6 +497,7 @@ services:
     environment:
       <<: *dotnet-dev-env
       OwnerUserId__0: "1"
+      OwnerUserId__1: "2"
 
   games-service:
     <<: *dotnet-dev-service
@@ -494,6 +517,7 @@ services:
     environment:
       <<: *dotnet-dev-env
       OwnerUserId__0: "1"
+      OwnerUserId__1: "2"
       Telemetry__PrometheusBaseUrl: "http://prometheus:9090/"
 
   asset-validation:

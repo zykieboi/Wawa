@@ -1,0 +1,10 @@
+{
+  "publicRuntimeConfig": {
+    "backend": {
+      "baseUrl": "",
+      "apiFormat": "/apisite/{0}{1}",
+      "proxyEnabled": false,
+      "flags": {}
+    }
+  }
+}

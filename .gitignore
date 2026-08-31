@@ -1,7 +1,6 @@
 # project deps
 **/node_modules
 # configuration files
-**/config.json
 # env files
 **/*.env
 # js files (in src)

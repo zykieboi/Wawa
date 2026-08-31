@@ -95,7 +95,7 @@ const LoginArea = props => {
         }).then(() => {
             window.location.href = '/home';
         }).catch(e => {
-            setFeedback(e.response?.data?.errors[0]?.message || e.message);
+            setFeedback(e.response?.data?.errors?.[0]?.message || e.response?.data?.error || e.message || 'Login failed');
         }).finally(() => {
             setLocked(false);
         })

@@ -86,7 +86,7 @@ export const getUrlWithProxy = (url) => {
  * @param {Record<string,string>?} extraHeaders
  * @returns {Promise<axios.AxiosResponse<any>>}
  */
-const request = async (method, url, data, verbose = false, extraHeaders) => {
+const request = async (method, url, data, verbose = false, extraHeaders = undefined) => {
     const isBrowser = typeof window !== 'undefined';
     try {
         let headers = {

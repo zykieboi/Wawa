@@ -5,7 +5,7 @@ namespace Roblox.Rendering;
 public static class RenderHttpClient
 {
     private static readonly object Gate = new();
-    private static HttpClient _client = CreateClient("http://127.0.0.1:3521/", string.Empty);
+    private static HttpClient _client = CreateClient("http://rcc-service-arbiter:3521/", string.Empty);
     private static bool _useBinaryTransport = true;
 
     public static void Configure(string baseUrl, string authorization, bool useBinaryTransport = true)

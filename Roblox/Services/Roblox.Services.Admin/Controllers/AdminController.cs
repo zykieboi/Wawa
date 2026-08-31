@@ -1032,4 +1032,27 @@ public class AdminController : RobloxControllerBase
     {
         return await services.adminApi.GetPerfPermDateAsync(userId);
     }
+
+    [HttpPost("upload")]
+    [AdminPermission(Access.CreateAsset)]
+    public async Task<IActionResult> UploadFile(IFormFile file, [FromQuery] string type = "asset")
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest(new { error = "No file uploaded" });
+        
+        var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+        if (!Directory.Exists(uploadsPath))
+            Directory.CreateDirectory(uploadsPath);
+        
+        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+        var filePath = Path.Combine(uploadsPath, fileName);
+        
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+        
+        return Ok(new { fileName, filePath, size = file.Length, type });
+    }
+
 }

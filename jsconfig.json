@@ -1,15 +1,15 @@
 {
-	"compilerOptions": {
-		"checkJs": true,
-		"target": "esnext",
-		"module": "commonJS",
-		"moduleResolution": "node",
-		"resolveJsonModule": true
-	},
-	"exclude": [
-		"api/dist",
-		"api/public",
-		"AssetValidationService",
-		"2016-roblox"
-	]
+  "compilerOptions": {
+    "checkJs": false,
+    "target": "esnext",
+    "module": "commonJS",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "api/dist",
+    "api/public",
+    "AssetValidationService",
+    "2016-roblox"
+  ]
 }

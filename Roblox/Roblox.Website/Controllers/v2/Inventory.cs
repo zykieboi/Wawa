@@ -56,7 +56,7 @@ public class InventoryControllerV2 : ControllerBase
         {
             throw new NotFoundException(1, "This item does not exist.");
         }
-        var isUserCreatedGamePass = asset.assetType == Type.GamePass &&
+        var isUserCreatedGamePass = asset.assetType == Roblox.Models.Assets.Type.GamePass &&
                                     asset.creatorType == CreatorType.User &&
                                     asset.creatorTargetId == userId;
         if ((!isUserCreatedGamePass && asset.creatorType == CreatorType.User && asset.creatorTargetId == userId) ||

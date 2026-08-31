@@ -50,7 +50,9 @@ const SettingsDropdown = (props) => {
           onClick={(e) => {
             e.preventDefault();
             logout().then(() => {
-              window.location.reload();
+              window.location.href = '/login';
+            }).catch(() => {
+              window.location.href = '/login';
             });
           }}
           className=""
@@ -307,7 +309,9 @@ const LoggedInArea = (props) => {
                 if (e)
                   e?.preventDefault();
                 logout().then(() => {
-                  window.location.reload();
+                  window.location.href = '/login';
+                }).catch(() => {
+                  window.location.href = '/login';
                 })
               },
             },

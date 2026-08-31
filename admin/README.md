@@ -8,4 +8,4 @@ Run `npm run dev` to start the development webpack builder. The service doesn't 
 
 ## Deploy
 
-Deploying is simple. Just run `npm run build`, then commit everything. There will be merge conflicts inevitably with this method, however, it works for now (until S3 deployment is setup).
+Deploying is simple. Just run `npm run build`, then commit everything. There will be merge conflicts inevitably with this method, however, it works for npm run dev now (until S3 deployment is setup).

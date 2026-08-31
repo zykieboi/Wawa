@@ -48,6 +48,7 @@ const GlobalAlert = props => {
       }
     }
     getAlert().then(msg => {
+      if (typeof msg === 'string') return;
       msg.CreatedAt = Date.now();
       sessionStorage.setItem(alertStorageKey, JSON.stringify(msg));
       setAlert(msg);

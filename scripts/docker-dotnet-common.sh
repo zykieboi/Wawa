@@ -22,6 +22,7 @@ Roblox.Services.Thumbnails
 Roblox.Services.Users
 Roblox.Services.Games
 Roblox.Services.Admin
+Korone.RccServiceArbiter
 "
 
 restore_signature() {

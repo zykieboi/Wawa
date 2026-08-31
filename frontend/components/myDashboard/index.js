@@ -233,7 +233,7 @@ const MyDashboard = props => {
         getFriends({
             userId: auth.userId,
         }).then(d => {
-            if (d.length > 0) {
+            if (d && d.length > 0) {
                 setFriends(d);
             }
         });

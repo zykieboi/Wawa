@@ -17,5 +17,6 @@
     <ProjectReference Include="..\Services\Roblox.Services.Users\Roblox.Services.Users.csproj" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Services\Roblox.Services.Games\Roblox.Services.Games.csproj" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Services\Roblox.Services.Admin\Roblox.Services.Admin.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Korone.RccServiceArbiter\Korone.RccServiceArbiter.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

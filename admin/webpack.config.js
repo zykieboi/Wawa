@@ -23,6 +23,7 @@ const conf = {
 		conditionNames: ['svelte', 'browser', 'import', 'require', 'default']
 	},
 	output: {
+                publicPath: '/',
 		path: distPath,
 		filename: '[name].js',
 		chunkFilename: '[name].[id].js'

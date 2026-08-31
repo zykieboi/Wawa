@@ -1,13 +1,16 @@
 {
-    "extends": "@tsconfig/svelte/tsconfig.json",
-    "include": [
-        "types/**/*.d.ts",
-        "src/**/*",
-        "src/node_modules/**/*"
-    ],
-    "exclude": [
-        "node_modules/*",
-        "__sapper__/*",
-        "static/*"
-    ]
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler"
+  },
+  "include": [
+    "types/**/*.d.ts",
+    "src/**/*",
+    "src/node_modules/**/*"
+  ],
+  "exclude": [
+    "node_modules/*",
+    "__sapper__/*",
+    "static/*"
+  ]
 }

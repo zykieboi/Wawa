@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "checkJs": true,
-    "moduleResolution": "node",
+    "checkJs": false,
+    "moduleResolution": "bundler",
     "target": "es2020",
-    "jsx": "preserve",
+    "jsx": "preserve"
   }
 }

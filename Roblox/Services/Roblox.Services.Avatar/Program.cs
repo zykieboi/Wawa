@@ -11,6 +11,7 @@ builder.AddRobloxServiceDefaults("Roblox.Services.Avatar", ServiceExposure.Inter
 await FeatureFlags.RefreshOnceAsync();
 
 builder.Services.AddHostedService<FeatureFlagRefreshHostedService>();
+// builder.Services.AddHostedService<AvatarThumbnailRendererService>();
 builder.Services.AddExceptionHandler<AvatarServiceExceptionHandler>();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
