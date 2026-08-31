@@ -16,9 +16,23 @@ module.exports = {
         }),
     },
     exportPathMap: async function (defaultPathMap) {
-        // Remove pages that fail during static export
+        // Remove ALL dynamic routes (with brackets)
+        Object.keys(defaultPathMap).forEach(path => {
+            if (path.includes('[') && path.includes(']')) {
+                delete defaultPathMap[path];
+            }
+        });
+        
+        // Remove problem pages
         const excludedPages = [
             '/Forum/ShowPost.aspx',
+            '/Catalog.aspx',
+            '/catalog',
+            '/develop',
+            '/donate',
+            '/download',
+            '/trades',
+            '/welcome/onboarding',
         ];
         
         excludedPages.forEach(page => {
