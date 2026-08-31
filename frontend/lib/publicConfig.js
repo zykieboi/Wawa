@@ -1,5 +1,8 @@
 const fallbackPublicRuntimeConfig = {
   backend: {
+    baseUrl: '',
+    apiFormat: '/apisite/{0}{1}',
+    proxyEnabled: false,
     flags: {},
   },
 };
@@ -11,7 +14,9 @@ const parsePublicRuntimeConfig = () => {
   }
 
   try {
-    return JSON.parse(rawConfig);
+    const parsed = JSON.parse(rawConfig);
+    if (!parsed.publicRuntimeConfig) return fallbackPublicRuntimeConfig;
+    return parsed.publicRuntimeConfig;
   } catch (e) {
     console.warn('Failed to parse public runtime config', e);
     return fallbackPublicRuntimeConfig;
