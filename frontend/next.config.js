@@ -1,8 +1,5 @@
 // a
 module.exports = {
-    output: 'export',
-    images: { unoptimized: true },
-    trailingSlash: true,
     reactStrictMode: true,
     env: {
         NEXT_PUBLIC_KORONE_PUBLIC_CONFIG: JSON.stringify({
@@ -16,6 +13,8 @@ module.exports = {
             }
         }),
     },
+};
+
     exportPathMap: async function (defaultPathMap) {
         // Remove all dynamic routes
         Object.keys(defaultPathMap).forEach(path => {
