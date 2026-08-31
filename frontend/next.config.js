@@ -1,7 +1,5 @@
-const fs = require('fs');
-const path = require('path');
 const pkg = require('./package.json');
-const configPath = path.join(__dirname, 'config.json');
+
 let publicRuntimeConfig = {
     backend: {
         baseUrl: '',
@@ -11,12 +9,15 @@ let publicRuntimeConfig = {
     }
 };
 
-if (fs.existsSync(configPath)) {
-    const config = JSON.parse(fs.readFileSync(configPath).toString('utf-8'));
+// Try to load config.json if it exists
+try {
+    const config = require('./config.json');
     publicRuntimeConfig = {
         ...(config.publicRuntimeConfig || {}),
         frontendVer: pkg.version,
     };
+} catch (e) {
+    // No config.json, use defaults
 }
 
 module.exports = {
