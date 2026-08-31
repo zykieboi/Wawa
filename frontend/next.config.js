@@ -15,4 +15,16 @@ module.exports = {
             }
         }),
     },
+    exportPathMap: async function (defaultPathMap) {
+        // Remove pages that fail during static export
+        const excludedPages = [
+            '/Forum/ShowPost.aspx',
+        ];
+        
+        excludedPages.forEach(page => {
+            delete defaultPathMap[page];
+        });
+        
+        return defaultPathMap;
+    },
 };
