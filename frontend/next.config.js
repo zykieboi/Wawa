@@ -37,4 +37,19 @@ module.exports = {
             }
         }),
     },
+    exportPathMap: async function (defaultPathMap) {
+        // Remove pages that use getServerSideProps
+        const excludedPaths = [
+            '/User.aspx',
+        ];
+        
+        // Remove dynamic SSR pages
+        Object.keys(defaultPathMap).forEach(path => {
+            if (path.includes('/catalog/')) {
+                delete defaultPathMap[path];
+            }
+        });
+        
+        return defaultPathMap;
+    },
 };
