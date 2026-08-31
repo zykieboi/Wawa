@@ -1,7 +1,7 @@
 module.exports = {
     output: 'export',
     images: { unoptimized: true },
-    trailingSlash: true,
+    trailingSlash: false,
     reactStrictMode: true,
     env: {
         NEXT_PUBLIC_KORONE_PUBLIC_CONFIG: JSON.stringify({
