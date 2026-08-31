@@ -1,8 +1,8 @@
 {
   "publicRuntimeConfig": {
     "backend": {
-      "baseUrl": "",
-      "apiFormat": "/apisite/{0}{1}",
+      "baseUrl": "https://effective-eureka-v654q6jg7p63x45w-3000.app.github.dev",
+      "apiFormat": "https://effective-eureka-v654q6jg7p63x45w-3000.app.github.dev/apisite/{0}{1}",
       "proxyEnabled": false,
       "flags": {}
     }
