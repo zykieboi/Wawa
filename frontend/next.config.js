@@ -1,25 +1,3 @@
-const pkg = require('./package.json');
-
-let publicRuntimeConfig = {
-    backend: {
-        baseUrl: '',
-        apiFormat: '/apisite/{0}{1}',
-        proxyEnabled: false,
-        flags: {}
-    }
-};
-
-// Try to load config.json if it exists
-try {
-    const config = require('./config.json');
-    publicRuntimeConfig = {
-        ...(config.publicRuntimeConfig || {}),
-        frontendVer: pkg.version,
-    };
-} catch (e) {
-    // No config.json, use defaults
-}
-
 module.exports = {
     output: 'export',
     images: { unoptimized: true },
@@ -38,18 +16,11 @@ module.exports = {
         }),
     },
     exportPathMap: async function (defaultPathMap) {
-        // Remove pages that use getServerSideProps
-        const excludedPaths = [
-            '/User.aspx',
-        ];
-        
-        // Remove dynamic SSR pages
         Object.keys(defaultPathMap).forEach(path => {
-            if (path.includes('/catalog/')) {
+            if (path.includes('[') && path.includes(']')) {
                 delete defaultPathMap[path];
             }
         });
-        
         return defaultPathMap;
     },
 };
