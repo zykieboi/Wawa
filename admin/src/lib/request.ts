@@ -1,6 +1,9 @@
 import axios, { AxiosHeaders } from 'axios';
 const configuredBaseUrl = (window as Window & { ADMIN_API_BASE_URL?: string }).ADMIN_API_BASE_URL;
-export const adminApiBaseUrl: string = configuredBaseUrl || 'https://admin.pekora.zip/v1/';
+const forwardedBaseUrl = window.location.hostname.includes('.app.github.dev')
+	? `${window.location.protocol}//${window.location.hostname.replace('-5173.', '-3000.')}/v1/`
+	: `${window.location.protocol}//${window.location.hostname}:5200/v1/`;
+export const adminApiBaseUrl: string = configuredBaseUrl || forwardedBaseUrl;
 let goodCsrf = '';
 
 export function adminApiUrl(path: string): string {

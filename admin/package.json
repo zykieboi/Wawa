@@ -5,7 +5,7 @@
         "rm:bundle": "node -e \"try{require('fs').unlinkSync(require('path').join(__dirname, './public/build/bundle.js.map'));}catch{}\"",
         "rm:license": "node -e \"try{require('fs').unlinkSync(require('path').join(__dirname, './public/build/bundle.js.LICENSE.txt'));}catch{}\"",
         "build": "npm run rm:bundle && npm run rm:license && cross-env NODE_ENV=production webpack",
-        "dev": "cross-env NODE_ENV=development webpack --watch",
+        "dev": "cross-env NODE_ENV=development webpack serve --mode development --host 0.0.0.0 --port 5173",
         "analyze": "cross-env NODE_ENV=production ANALYZE=true webpack",
         "validate": "svelte-check"
     },

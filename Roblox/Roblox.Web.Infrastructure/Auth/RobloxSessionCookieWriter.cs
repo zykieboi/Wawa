@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using System.Net;
 using Roblox.Web.Infrastructure.Http;
 
 namespace Roblox.Web.Infrastructure.Auth;
@@ -63,7 +64,20 @@ public static class RobloxSessionCookieWriter
         var configuredBaseUrl = Roblox.Configuration.ShortBaseUrl;
         if (!string.IsNullOrWhiteSpace(configuredBaseUrl))
         {
-            return "." + configuredBaseUrl.Trim().TrimStart('.');
+            var configuredDomain = configuredBaseUrl.Trim();
+            if (Uri.TryCreate(configuredDomain, UriKind.Absolute, out var configuredUri))
+            {
+                configuredDomain = configuredUri.Host;
+            }
+
+            configuredDomain = configuredDomain.TrimStart('.');
+            if (string.Equals(configuredDomain, "localhost", StringComparison.OrdinalIgnoreCase) ||
+                IPAddress.TryParse(configuredDomain, out _))
+            {
+                return null;
+            }
+
+            return "." + configuredDomain;
         }
 
         var host = httpContext.Request.Host.Host;

@@ -21,6 +21,19 @@ import request from '../lib/request';
 const permissionsPromise = request.get<IRankResponse>('/permissions').then(data => {
 	console.log('[info] current perms', data.data);
 	store.set(data.data);
+	return data.data;
+}).catch(error => {
+	console.error('[error] could not load admin permissions:', error);
+	const unavailable = {
+		rank: {
+			name: 'Unavailable',
+			details: { isAdmin: false, isModerator: false, isOwner: false },
+			permissions: [],
+		},
+		restrictions: {},
+	};
+	store.set(unavailable);
+	return unavailable;
 });
 
 export const promise = permissionsPromise;

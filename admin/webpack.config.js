@@ -20,7 +20,7 @@ const conf = {
 		},
 		extensions: ['.mjs', '.js', '.ts', '.svelte'],
 		mainFields: ['svelte', 'browser', 'module', 'main'],
-		conditionNames: ['svelte']
+		conditionNames: ['svelte', 'browser', 'import', 'require', 'default']
 	},
 	output: {
 		path: distPath,
@@ -85,7 +85,10 @@ const conf = {
 	],
 	devtool: prod ? false : 'source-map',
 	devServer: {
-		hot: true
+		hot: true,
+		client: {
+			overlay: false,
+		},
 	}
 };
 

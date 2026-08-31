@@ -249,14 +249,7 @@ public class WebController2021 : ControllerBase
     public async Task<IActionResult> InventoryPage(long userId)
     {
         var data = await services.users.GetUserById(userId);
-        return await GetPage("userInventory", new List<dynamic>()
-        {
-            new
-            {
-                username = data.username,
-                userId = data.userId,
-            },
-        });
+        return Redirect($"/users/{data.userId}/inventory");
     }
 
     [HttpGet("users/{userId:long}/friends")]

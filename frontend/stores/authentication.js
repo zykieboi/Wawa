@@ -23,6 +23,9 @@ const AuthenticationStore = createContainer(() => {
 
   useEffect(() => {
     getMyInfo().then(result => {
+      if (!result) {
+        return;
+      }
       if (typeof result === 'string') {
         throw new Error('Unexpected Response');
       }

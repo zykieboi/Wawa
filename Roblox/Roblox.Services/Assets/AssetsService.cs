@@ -1751,7 +1751,7 @@ public class AssetsService : ServiceBase, IService
     public async Task<ProductEntry> GetProductForAsset(long assetId)
     {
         var result = await db.QuerySingleOrDefaultAsync<ProductEntry>(
-            "SELECT name, description as description, is_for_sale as isForSale, is_limited as isLimited, is_limited_unique as isLimitedUnique, price_robux as priceRobux, price_tix as priceTickets, serial_count as serialCount, offsale_at as offsaleAt, is_on_sale as isOnSale, sale_units_total as saleUnitsTotal, sale_units_remaining as saleUnitsRemaining, sale_price_robux as salePriceRobux, sale_price_tix as salePriceTix FROM asset WHERE id = :id",
+            "SELECT name, description, is_for_sale as isForSale, is_limited as isLimited, is_limited_unique as isLimitedUnique, price_robux as priceRobux, price_tix as priceTickets, serial_count as serialCount, offsale_at as offsaleAt, is_for_sale as isOnSale, NULL::bigint as saleUnitsTotal, NULL::bigint as saleUnitsRemaining, NULL::bigint as salePriceRobux, NULL::bigint as salePriceTix FROM asset WHERE id = :id",
             new
             {
                 id = assetId,
@@ -1858,7 +1858,7 @@ public class AssetsService : ServiceBase, IService
             throw new ArgumentException("salesUnits must be greater than zero");
 
         var current = await db.QuerySingleOrDefaultAsync<SaleSnapshotRow>(
-            "SELECT is_on_sale as isOnSale, is_for_sale as isForSale, price_robux as priceRobux, price_tix as priceTix FROM asset WHERE id = :id",
+            "SELECT is_for_sale as isOnSale, is_for_sale as isForSale, price_robux as priceRobux, price_tix as priceTix FROM asset WHERE id = :id",
             new { id = assetId });
         if (current == null)
             throw new RecordNotFoundException();
@@ -2060,7 +2060,7 @@ public class AssetsService : ServiceBase, IService
         watch.Start();
         var query = new SqlBuilder();
         var t = query.AddTemplate(
-            "SELECT asset.id as id, asset_type as assetType, asset.name, asset.description, asset_genre as genre, creator_type as creatorType, creator_id as creatorTargetId, offsale_at as offsaleDeadline, is_for_sale as isForSale, price_robux as priceRobux, price_tix as priceTickets, is_limited as isLimited, is_limited_unique as isLimitedUnique, comments_enabled as commentsEnabled, serial_count as serialCount, \"group\".name as groupName, \"user\".username as username, asset.created_at as createdAt, asset.updated_at as updatedAt, asset.is_18_plus, asset.moderation_status, asset.is_on_sale as isOnSale, asset.sale_units_total as saleUnitsTotal, asset.sale_units_remaining as saleUnitsRemaining, asset.sale_price_robux as salePriceRobux, asset.sale_price_tix as salePriceTix FROM asset LEFT JOIN \"user\" ON \"user\".id = asset.creator_id LEFT JOIN \"group\" ON \"group\".id = asset.creator_id /**where**/ LIMIT 200", new
+            "SELECT asset.id as id, asset_type as assetType, asset.name, asset.description, asset_genre as genre, creator_type as creatorType, creator_id as creatorTargetId, offsale_at as offsaleDeadline, is_for_sale as isForSale, price_robux as priceRobux, price_tix as priceTickets, is_limited as isLimited, is_limited_unique as isLimitedUnique, comments_enabled as commentsEnabled, serial_count as serialCount, \"group\".name as groupName, \"user\".username as username, asset.created_at as createdAt, asset.updated_at as updatedAt, asset.is_18_plus, asset.moderation_status, asset.is_for_sale as isOnSale, NULL::bigint as saleUnitsTotal, NULL::bigint as saleUnitsRemaining, NULL::bigint as salePriceRobux, NULL::bigint as salePriceTix FROM asset LEFT JOIN \"user\" ON \"user\".id = asset.creator_id LEFT JOIN \"group\" ON \"group\".id = asset.creator_id /**where**/ LIMIT 200", new
             {
                 sale_type = PurchaseType.Purchase,
                 sub_sale_type = TransactionSubType.ItemPurchase,
@@ -2202,7 +2202,7 @@ WHERE asset_type = :asset_type AND asset.id < :id AND NOT asset.is_18_plus ORDER
 
         var builder = new SqlBuilder();
         var selectTemplate = builder.AddTemplate(
-            "SELECT id, is_on_sale as isOnSale FROM asset /**where**/ /**orderby**/ LIMIT :limit OFFSET :offset", new
+            "SELECT id, is_for_sale as isOnSale FROM asset /**where**/ /**orderby**/ LIMIT :limit OFFSET :offset", new
             {
                 request.limit,
                 offset,
@@ -2269,11 +2269,11 @@ WHERE asset_type = :asset_type AND asset.id < :id AND NOT asset.is_18_plus ORDER
                     break;
             }
 
-            builder.OrderBy("is_on_sale DESC, " + column + " " + mode);
+            builder.OrderBy("is_for_sale DESC, " + column + " " + mode);
         }
         else
         {
-            builder.OrderBy("is_on_sale DESC, created_at DESC");
+            builder.OrderBy("is_for_sale DESC, created_at DESC");
         }
 
         // If community creations, exclude system account
@@ -4063,7 +4063,7 @@ WHERE asset_type = :asset_type AND asset.id < :id AND NOT asset.is_18_plus ORDER
 
         var builder = new SqlBuilder();
         var selectTemplate = builder.AddTemplate(
-            "SELECT id, is_on_sale as isOnSale FROM asset /**where**/ /**orderby**/ LIMIT :limit OFFSET :offset", new
+            "SELECT id, is_for_sale as isOnSale FROM asset /**where**/ /**orderby**/ LIMIT :limit OFFSET :offset", new
             {
                 request.limit,
                 offset,
@@ -4128,11 +4128,11 @@ WHERE asset_type = :asset_type AND asset.id < :id AND NOT asset.is_18_plus ORDER
                     break;
             }
 
-            builder.OrderBy("is_on_sale DESC, " + column + " " + mode);
+            builder.OrderBy("is_for_sale DESC, " + column + " " + mode);
         }
         else
         {
-            builder.OrderBy("is_on_sale DESC, created_at DESC");
+            builder.OrderBy("is_for_sale DESC, created_at DESC");
         }
 
         // end of library seciton

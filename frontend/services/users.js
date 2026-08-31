@@ -4,7 +4,14 @@ import { getFullUrl } from "../lib/request";
 const baseUrl = getFullUrl('users', '');
 
 export const getMyInfo = () => {
-  return request('GET', baseUrl + '/v1/users/authenticated').then(d => d.data)
+  return request('GET', baseUrl + '/v1/users/authenticated')
+    .then(d => d.data)
+    .catch(error => {
+      if (error.response?.status === 401) {
+        return null;
+      }
+      throw error;
+    });
 }
 
 export const getUserInfo = ({ userId }) => {

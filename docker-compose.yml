@@ -272,18 +272,80 @@ services:
       - --ReverseProxy:Clusters:avatar-cluster:Destinations:primary:Address=http://avatar-service:5207
       - --ReverseProxy:Clusters:thumbnails-cluster:Destinations:primary:Address=http://thumbnails-service:5208
       - --ReverseProxy:Clusters:users-cluster:Destinations:primary:Address=http://users-service:5209
+      - --ReverseProxy:Clusters:frontend-cluster:Destinations:primary:Address=http://frontend:3000
+      - --ReverseProxy:Routes:frontend-user-inventory:ClusterId=frontend-cluster
+      - --ReverseProxy:Routes:frontend-user-inventory:Match:Path=/users/{userId}/inventory
+      - --ReverseProxy:Routes:frontend-user-inventory:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:frontend-user-inventory:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:frontend-user-inventory:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:frontend-user-inventory:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:admin-api-route:ClusterId=admin-cluster
+      - --ReverseProxy:Routes:admin-api-route:Match:Path=/v1/{**catch-all}
+      - --ReverseProxy:Routes:admin-api-route:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:admin-api-route:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:admin-api-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:admin-api-route:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:website-auth-route:ClusterId=website-cluster
+      - --ReverseProxy:Routes:website-auth-route:Match:Path=/auth/{**catch-all}
+      - --ReverseProxy:Routes:website-auth-route:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:website-auth-route:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:website-auth-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:website-auth-route:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:website-apisite-fallback:ClusterId=website-cluster
+      - --ReverseProxy:Routes:website-apisite-fallback:Match:Path=/apisite/{**catch-all}
+      - --ReverseProxy:Routes:website-apisite-fallback:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:website-apisite-fallback:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:website-apisite-fallback:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:website-apisite-fallback:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:website-legacy-users:ClusterId=website-cluster
+      - --ReverseProxy:Routes:website-legacy-users:Match:Path=/users/{**catch-all}
+      - --ReverseProxy:Routes:website-legacy-users:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:website-legacy-users:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:website-legacy-users:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:website-legacy-users:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:website-legacy-sponsorship:ClusterId=website-cluster
+      - --ReverseProxy:Routes:website-legacy-sponsorship:Match:Path=/user-sponsorship/{**catch-all}
+      - --ReverseProxy:Routes:website-legacy-sponsorship:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:website-legacy-sponsorship:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:website-legacy-sponsorship:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:website-legacy-sponsorship:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:website-legacy-feeds:ClusterId=website-cluster
+      - --ReverseProxy:Routes:website-legacy-feeds:Match:Path=/Feeds/{**catch-all}
+      - --ReverseProxy:Routes:website-legacy-feeds:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:website-legacy-feeds:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:website-legacy-feeds:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:website-legacy-feeds:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:avatar-apisite-route:ClusterId=avatar-cluster
+      - --ReverseProxy:Routes:auth-apisite-route:ClusterId=api-cluster
+      - --ReverseProxy:Routes:auth-apisite-route:Match:Path=/apisite/auth/{**catch-all}
+      - --ReverseProxy:Routes:auth-apisite-route:Transforms:0:PathRemovePrefix=/apisite/auth
+      - --ReverseProxy:Routes:auth-apisite-route:Match:Hosts:0=localhost
+      - --ReverseProxy:Routes:auth-apisite-route:Match:Hosts:1=127.0.0.1
+      - --ReverseProxy:Routes:auth-apisite-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:auth-apisite-route:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:avatar-apisite-route:Match:Path=/apisite/avatar/{**catch-all}
       - --ReverseProxy:Routes:avatar-apisite-route:Match:Hosts:0=localhost
       - --ReverseProxy:Routes:avatar-apisite-route:Match:Hosts:1=127.0.0.1
       - --ReverseProxy:Routes:avatar-apisite-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:avatar-apisite-route:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:thumbnails-apisite-route:ClusterId=thumbnails-cluster
+      - --ReverseProxy:Routes:thumbnails-apisite-route:Match:Path=/apisite/thumbnails/{**catch-all}
       - --ReverseProxy:Routes:thumbnails-apisite-route:Match:Hosts:0=localhost
       - --ReverseProxy:Routes:thumbnails-apisite-route:Match:Hosts:1=127.0.0.1
       - --ReverseProxy:Routes:thumbnails-apisite-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:thumbnails-apisite-route:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:users-apisite-route:ClusterId=users-cluster
+      - --ReverseProxy:Routes:users-apisite-route:Match:Path=/apisite/users/{**catch-all}
       - --ReverseProxy:Routes:users-apisite-route:Match:Hosts:0=localhost
       - --ReverseProxy:Routes:users-apisite-route:Match:Hosts:1=127.0.0.1
       - --ReverseProxy:Routes:users-apisite-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:users-apisite-route:Match:Hosts:3=api-proxy
+      - --ReverseProxy:Routes:games-apisite-route:ClusterId=games-cluster
+      - --ReverseProxy:Routes:games-apisite-route:Match:Path=/apisite/games/{**catch-all}
       - --ReverseProxy:Routes:games-apisite-route:Match:Hosts:0=localhost
       - --ReverseProxy:Routes:games-apisite-route:Match:Hosts:1=127.0.0.1
       - --ReverseProxy:Routes:games-apisite-route:Match:Hosts:2=www.pekora.zip
+      - --ReverseProxy:Routes:games-apisite-route:Match:Hosts:3=api-proxy
     ports:
       - "127.0.0.1:5200:5200"
     environment:
@@ -294,7 +356,10 @@ services:
       FrontendProxy__PublicHosts__2: "pekora.zip"
       FrontendProxy__PublicHosts__3: "www.pekora.zip"
       InternalServiceHosts__0: "localhost"
+      InternalServiceHosts__1: "api-proxy"
       InternalServiceHosts__16: "127.0.0.1"
+      InternalServiceRoutes__0__PathPrefixes__0: "/v1/"
+      InternalServiceRoutes__1__PathPrefixes__0: "/apisite/"
     depends_on:
       dotnet-build:
         condition: service_completed_successfully

@@ -51,7 +51,9 @@ export const getGroupGames = ({groupId, cursor}) => {
 }
 
 export const getGameSorts = ({gameSortsContext}) => {
-    return request('GET', getFullUrl('games', `/v1/games/sorts?gameSortsContext=${encodeURIComponent(gameSortsContext || '')}`)).then(d => d.data)
+    return request('GET', getFullUrl('games', `/v1/games/sorts?gameSortsContext=${encodeURIComponent(gameSortsContext || '')}`))
+        .then(d => d.data)
+        .catch(error => error.response?.status === 401 ? { sorts: [] } : Promise.reject(error));
 }
 
 export const getRecommendedGames = ({placeId, limit}) => {
@@ -59,7 +61,9 @@ export const getRecommendedGames = ({placeId, limit}) => {
 }
 
 export const getGameList = ({sortToken, limit, genre = 0, keyword}) => {
-    return request('GET', getFullUrl('games', `/v1/games/list?sortToken=${encodeURIComponent(sortToken)}&maxRows=${limit}&genre=${genre}&keyword=${keyword}`)).then(d => d.data)
+    return request('GET', getFullUrl('games', `/v1/games/list?sortToken=${encodeURIComponent(sortToken)}&maxRows=${limit}&genre=${genre}&keyword=${keyword}`))
+        .then(d => d.data)
+        .catch(error => error.response?.status === 401 ? { games: [] } : Promise.reject(error));
 }
 
 export const getGameMedia = ({universeId}) => {

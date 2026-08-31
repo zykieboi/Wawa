@@ -36,7 +36,10 @@ export const multiGetUserHeadshots2 = ({ userIds, size = '420x420', format = 'pn
 }
 
 export const multiGetUserThumbnails3D = ({ userIds, size = '420x420', format = 'png' }) => {
-  return request('GET', getFullUrl('thumbnails', `/v1/users/avatar-3d?userIds=${toCsv(userIds)}&size=${size}&format=${format}`)).then(d => d.data.data).then(addBaseUrl);
+  return request('GET', getFullUrl('thumbnails', `/v1/users/avatar-3d?userIds=${toCsv(userIds)}&size=${size}&format=${format}`))
+    .then(d => d.data.data)
+    .then(addBaseUrl)
+    .catch(error => error.response?.status === 400 || error.response?.status === 404 ? [] : Promise.reject(error));
 }
 
 let _multiGetHeadshotsMeta = {

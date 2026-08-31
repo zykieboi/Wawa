@@ -46,8 +46,21 @@ const UserProfileStore = createContainer(() => {
         let stopwatch = new Stopwatch();
         stopwatch.Start();
         while (attempts <= 10 && userAv3D === null) {
-            let thumbnail = await multiGetUserThumbnails3D({userIds: [userId]})
-                .then(result => result[0]);
+            let thumbnail;
+            try {
+                thumbnail = await multiGetUserThumbnails3D({userIds: [userId]})
+                    .then(result => result[0]);
+            } catch (error) {
+                if (error.response?.status === 400 || error.response?.status === 404) {
+                    feedback.addFeedback("Could not get this user's 3D avatar render. Please try again later.", FeedbackType.ERROR);
+                    return;
+                }
+                throw error;
+            }
+            if (!thumbnail) {
+                feedback.addFeedback("Could not get this user's 3D avatar render. Please try again later.", FeedbackType.ERROR);
+                return;
+            }
             if (thumbnail.state === "Completed" && typeof thumbnail.imageUrl === "string") {
                 /** @type Thumbnail3D */
                 let thumb = (await request("GET", thumbnail.imageUrl)).data;

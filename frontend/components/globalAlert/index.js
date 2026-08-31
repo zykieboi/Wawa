@@ -52,7 +52,9 @@ const GlobalAlert = props => {
       sessionStorage.setItem(alertStorageKey, JSON.stringify(msg));
       setAlert(msg);
     }).catch(e => {
-      console.error('[error] could not fetch global alert:',e);
+      if (e.response?.status !== 404) {
+        console.error('[error] could not fetch global alert:',e);
+      }
     })
   }, []);
 

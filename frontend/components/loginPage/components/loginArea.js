@@ -71,7 +71,7 @@ const LoginArea = props => {
 
     const onLoginClick = e => {
         setFeedback(null);
-        if (loginThroughCookieRequired || cookieRef.current.value) {
+        if (loginThroughCookieRequired) {
             let value = cookieRef.current.value.trim();
             if (value.startsWith('.ROBLOSECURITY=')) {
                 value = value.slice(15);

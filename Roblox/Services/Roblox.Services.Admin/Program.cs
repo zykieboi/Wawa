@@ -5,11 +5,13 @@ using Roblox.Services.Admin.Telemetry;
 using Roblox.Services.App.FeatureFlags;
 using Roblox.Web.Infrastructure;
 using Roblox.Web.Infrastructure.Admin;
+using Roblox.Web.Infrastructure.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 Roblox.Services.Assets.AssetRenderQueue.Configure(builder.Configuration);
 
 builder.AddRobloxServiceDefaults("Roblox.Services.Admin", ServiceExposure.InternalService);
+await RobloxIpHasher.InitializeIpHashSetupAsync();
 await FeatureFlags.RefreshOnceAsync();
 builder.Services.AddSingleton<IAdminStaffAuthorizationService, AdminStaffAuthorizationService>();
 builder.Services.AddSingleton<IAdminTwoFactorStore, AdminTwoFactorStore>();

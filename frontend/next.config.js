@@ -22,6 +22,30 @@ module.exports = withBundleAnalyzer({
     turbopack: {
         root: __dirname,
     },
+    async rewrites() {
+        return [
+            {
+                source: '/apisite/:path*',
+                destination: 'http://api-proxy:5200/apisite/:path*',
+            },
+            {
+                source: '/v1/:path*',
+                destination: 'http://api-proxy:5200/v1/:path*',
+            },
+            {
+                source: '/users/inventory/list-json',
+                destination: 'http://api-proxy:5200/users/inventory/list-json',
+            },
+            {
+                source: '/user-sponsorship/:path*',
+                destination: 'http://api-proxy:5200/user-sponsorship/:path*',
+            },
+            {
+                source: '/Feeds/:path*',
+                destination: 'http://api-proxy:5200/Feeds/:path*',
+            },
+        ];
+    },
     env: {
         NEXT_PUBLIC_KORONE_PUBLIC_CONFIG: JSON.stringify(publicRuntimeConfig),
     },

@@ -156,14 +156,13 @@ const CategorySelection = props => {
     },
   ].filter(v => !!v);
   const [selected ,setSelected] = useState(() => {
-    // On first load, hide menu if user is on desktop.
-    // This is so that the Accessory side menu doesn't show up.
-    if (typeof window !== 'undefined' && window.innerWidth >= 992) {
-      return null;
-    }
-
     return options.find(v => v.value === (getFlag('accessoriesEnabled', false) ? 'Accessories' : 8))
   });
+  useEffect(() => {
+    if (window.innerWidth >= 992) {
+      setSelected(null);
+    }
+  }, []);
   const onChange = v => {
     if (v.children) {
       setSelected(selected === v ? null : v);

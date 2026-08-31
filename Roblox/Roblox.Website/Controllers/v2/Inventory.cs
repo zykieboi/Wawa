@@ -56,7 +56,12 @@ public class InventoryControllerV2 : ControllerBase
         {
             throw new NotFoundException(1, "This item does not exist.");
         }
-        if ((asset.creatorType == CreatorType.User && asset.creatorTargetId == userId) || asset.itemRestrictions.Contains("Limited") || asset.itemRestrictions.Contains("LimitedUnique"))
+        var isUserCreatedGamePass = asset.assetType == Type.GamePass &&
+                                    asset.creatorType == CreatorType.User &&
+                                    asset.creatorTargetId == userId;
+        if ((!isUserCreatedGamePass && asset.creatorType == CreatorType.User && asset.creatorTargetId == userId) ||
+            asset.itemRestrictions.Contains("Limited") ||
+            asset.itemRestrictions.Contains("LimitedUnique"))
             throw new ForbiddenException(3, "This item is not allowed to be deleted.");
         if (!await services.inventory.IsOwned(userId, assetId))
             throw new ForbiddenException(2, "You don't own the specified item.");

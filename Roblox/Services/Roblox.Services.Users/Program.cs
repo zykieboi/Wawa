@@ -1,10 +1,12 @@
 using Roblox.ServiceDefaults;
 using Roblox.Services.Users.Services;
 using Roblox.Web.Infrastructure;
+using Roblox.Web.Infrastructure.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddRobloxServiceDefaults("Roblox.Services.Users", ServiceExposure.InternalService);
+await RobloxIpHasher.InitializeIpHashSetupAsync();
 builder.Services.AddSingleton<StaffPermissionsResolver>();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

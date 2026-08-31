@@ -3,7 +3,7 @@ import { getFullUrl } from "../lib/request";
 
 export const login = ({ username, password }) => {
   return request('POST', getFullUrl('auth', '/v2/login'), {
-    ctype: 'username',
+    ctype: 'Username',
     cvalue: username,
     password,
   });
