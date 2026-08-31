@@ -1,19 +1,17 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const UserPage = props => {
+const UserPage = () => {
+  const router = useRouter();
+  
+  useEffect(() => {
+    const userId = router.query['ID'];
+    if (userId) {
+      router.push(`/users/${userId}/profile`);
+    }
+  }, [router.query]);
+
   return null;
-}
-
-
-export async function getServerSideProps({ query, res, req }) {
-  const userId = query['ID'];
-  return {
-    redirect: {
-      destination: `/users/${userId}/profile`,
-    },
-    props: {}
-  };
-}
-
+};
 
 export default UserPage;
